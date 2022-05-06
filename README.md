@@ -26,7 +26,7 @@ Usage
 4. Overwrite the *Product.wxs* template with the provided *Product.wxs*
 5. Suppress ICE Validation in Visual Studio 2022
 6. Add the *WixIisExtension.dll* as a reference to the project
-7. Place *Cisco_Umbrella_Root_CA.cer* and *OrgInfo.json* into _%User%\source\repos\CiscoUmbrellaConfiguration\CiscoUmbrellaConfiguration\bin\Debug\_
+7. Place *Cisco_Umbrella_Root_CA.cer* and *OrgInfo.json* into *"%User%\source\repos\CiscoUmbrellaConfiguration\CiscoUmbrellaConfiguration\bin\Debug\"*
 8. Build the MSI
 9. Deploy the MSI installer as needed
 
