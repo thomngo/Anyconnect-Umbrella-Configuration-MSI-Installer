@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Version="1.0.0.0"
+			 Id="{D84936DA-264E-4F01-B85F-51FFC2481873}"
+			 Language="1033"
+			 Manufacturer="Cisco"
+			 Name="Cisco Umbrella Configuration"
+			 UpgradeCode="{AA9F35F2-570A-48BD-B970-097AD04DBFDE}"> 
+		<Package Compressed="yes" Description="Cisco Umbrella Configuration" />
+		<Media Id="1" EmbedCab="yes" Cabinet="store"/>
+		<Binary Id="UmbrellaRootCA" SourceFile="$(var.SolutionDir)CiscoUmbrellaConfiguration\bin\Debug\Cisco_Umbrella_Root_CA.cer" />
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="CommonAppDataFolder">
+				<Directory Id="CommonAppDataManufacturerFolder" Name="Cisco">
+					<Directory Id="AnyConnectAppDataFolder" Name="Cisco AnyConnect Secure Mobility Client">
+						<Directory Id="UmbrellaAppDataFolder" Name="Umbrella">
+							<Component Id="OrgInfo_json" Guid="{3AD2359A-4306-4B38-86F2-9E4FB39422D7}">
+								<File Id="OrgInfo_json"
+										Source="$(var.SolutionDir)CiscoUmbrellaConfiguration\bin\Debug\OrgInfo.json"
+										KeyPath="yes" Checksum="yes" PatchWholeFile="yes" />
+							</Component>
+						</Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+			<Directory Id="LocalAppDataFolder">
+				<Directory Id="MozillaLocalAppDataFolder" Name="Mozilla">
+					<Directory Id="CertificatesFolder" Name="Certificates">
+						<Component Id="Cisco_Umbrella_Root_CA_Firefox" Guid="{E7692284-4191-4710-AFF8-ED1671CCBB57}" >
+							<File Id="Cisco_Umbrella_Root_CA_Firefox"
+								  Source="$(var.SolutionDir)CiscoUmbrellaConfiguration\bin\Debug\Cisco_Umbrella_Root_CA.cer" 
+								  Checksum="yes" PatchWholeFile="yes" KeyPath="yes"/>
+						</Component>
+					</Directory>
+				</Directory>
+			</Directory>
+			<Component Id="Cisco_Umbrella_Root_CA_Firefox_EnterpriseRootCAEnable" Guid="{0E43D53D-3C95-49D8-B7B3-AF98BDFCAE18}">
+				<RegistryKey Root="HKLM" Key="SOFTWARE\Policies\Mozilla\Firefox\Certificates" ForceDeleteOnUninstall="yes">
+					<RegistryValue Type="integer" Name="ImportEnterpriseRoots" Value="1" KeyPath="yes" />
+				</RegistryKey>
+			</Component>
+		</Directory>
+		<Feature Id="Cisco_Umbrella_Root_CA" Description="Cisco Umbrella Root CA">
+			<Component Id="Cisco_Umbrella_Root_CA"
+					   Guid="{A133BFD4-1029-470E-99E9-806B3435488D}"
+					   Directory="TARGETDIR">
+				<iis:Certificate xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension"
+								 Id="c5091132e9adf8ad3e33932ae60a5c8fa939e824"
+								 Name="Cisco Umbrella Root CA"
+								 StoreLocation="localMachine"
+								 StoreName="root"
+								 Request="no"
+								 BinaryKey="UmbrellaRootCA"
+							 />
+			</Component>
+		</Feature>
+		<Feature Id="OrgInfo_json" Description="Umbrella Module Profile">
+			<ComponentRef Id="OrgInfo_json"/>
+		</Feature>
+		<Feature Id="Cisco_Umbrella_Root_CA_Firefox" Description="Cisco Umbrella Root CA for Firefox">
+			<ComponentRef Id="Cisco_Umbrella_Root_CA_Firefox" />
+			<ComponentRef Id="Cisco_Umbrella_Root_CA_Firefox_EnterpriseRootCAEnable" />
+		</Feature>
+	</Product>
+</Wix>
