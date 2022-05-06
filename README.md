@@ -1,4 +1,4 @@
-# Anyconnect-Umbrella-Configuration-MSI-Installer
+# Anyconnect Umbrella Configuration MSI Installer
 WXS file to build a MSI file that installs configuration files for Anyconnect Roaming Security Module (Umbrella)
 
 Tested Environment
