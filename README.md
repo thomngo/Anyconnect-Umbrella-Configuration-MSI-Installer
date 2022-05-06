@@ -15,7 +15,7 @@ This WXS file creates an MSI file that installs and deploys:
 This does **not** deploy Anyconnect Core VPN or Anyconnect Umbrella Roaming Security Module. These can be deployed using MSI files found on software.cisco.com
 
 
-## Prerequisites:
+## Prerequisites
 - Wix Toolset 3.11.2 (https://wixtoolset.org/releases/)
 - Wix Toolset Visual Studio 2022 Extension
 - Visual Studio 2022 Enterprise (https://visualstudio.microsoft.com/vs/)
